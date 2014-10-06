@@ -1,0 +1,23 @@
+<OR>
+	<PG_01_SearchVehicle>
+		<RentaCarIn type ="select" id ="countryDropdown" name = "countryDropdown" xpath="//*[@id='countryDropdown]" identifier="Byname"></RentaCarIn>
+		<ShowAirportOnly type = "checkbox" id="airportOnly" name="ariportOnly" xpath="//*[@id='airportOnly]" identifier="Byid"></ShowAirportOnly> 
+		<PickupLocation type="input" id="xyz" name="searchCriteria" xpath="//*[@id='searchCriteria']" identifier="Byname"></PickupLocation>
+		<PickupMonth type ="select" id="startDateMonth" name="startDateMonth" xpath="//*[@id='startDateMonth" identifier ="Byname" ></PickupMonth>
+		<PickupDay type ="input" id="startDateInput" name="startDateInput" xpath="//*[@id='startDateInput" identifier ="Byname" ></PickupDay>
+		<PickupTime type ="select" id="startDateTime" name="startDateTime" xpath="//*[@id='startDateTime" identifier ="Byname" ></PickupTime>
+		<DropOffMonth type ="select" id="endtDateMonth" name="endDateMonth" xpath="//*[@id='endDateMonth" identifier ="Byname" ></DropOffMonth>
+		<DropOffDay type ="input" id="endDateInput" name="endDateInput" xpath="//*[@id='endDateInput" identifier ="Byname" ></DropOffDay>
+		<DropOffTime type ="select" id="endDateTime" name="endDateTime" xpath="//*[@id='endDateTime" identifier ="Byname" ></DropOffTime>
+		<Search type="submit" id="search" name ="search" xpath="//*[@id='search']" identifier ="Byname"></Search>
+		<ModifyExistingReservation type = "a" text = "Modify an Existing Reservation" id ="Modify an Existing Reservation" identifier = "Bylinktext"></ModifyExistingReservation>
+	</PG_01_SearchVehicle>
+	<PG_02_SearchResults>
+		<ChangeDateTime type = "a" text="change" index = "0" identifier="Byindex"></ChangeDateTime>
+		<ChangeRentersAge type="a" text="change" xpath = "//a[contains(@href,'changeAge')]" identifier="Byxpath"></ChangeRentersAge>
+		<Select type="a" text= "Select" index="0" identifier="Byindex"></Select>
+	</PG_02_SearchResults>
+	<PG_03_RentersAge>
+		<AgeRadioGroup type ="radio" name = "tagRadioGroup" identifier="Byname"></AgeRadioGroup>
+	</PG_03_RentersAge>
+</OR>
