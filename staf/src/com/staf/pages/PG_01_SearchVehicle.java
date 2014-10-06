@@ -3,7 +3,6 @@ package com.staf.pages;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.staf.common.Reporter;
 import com.staf.common.constants.DataConstants;
 import com.staf.common.constants.ObjectConstants;
 import com.staf.controls.*;
@@ -39,7 +38,6 @@ public class PG_01_SearchVehicle extends Page{
 		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffMonth), this.getData().get(DataConstants.PG_01_DropOffMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
 		Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffDay), this.getData().get(DataConstants.PG_01_DropOffDay)[ConfigReader.getInstance().getDataCurrentRow()]);
 		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffTime), this.getData().get(DataConstants.PG_01_DropOffTime)[ConfigReader.getInstance().getDataCurrentRow()]);
-		Reporter.info("Serach details entered");
 		System.out.println("Entered search criteria");
 	}
 	
