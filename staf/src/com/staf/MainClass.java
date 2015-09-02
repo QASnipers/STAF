@@ -1,11 +1,16 @@
 package com.staf;
 
+import org.testng.annotations.Test;
+
 import com.staf.common.*;
 import com.staf.reader.ConfigReader;
 
 public class MainClass  {
 
-	public static void main(String[] args) throws Exception{
+	//public static void main(String[] args) throws Exception{
+		
+	@Test
+	public void runScript() throws Exception{
 		
 		ConfigReader.getInstance().readConfiguration();
 		ConfigReader.getInstance().setTestCaseName("MainClass");

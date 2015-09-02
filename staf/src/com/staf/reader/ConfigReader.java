@@ -1,5 +1,7 @@
 package com.staf.reader;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -76,7 +78,8 @@ public class ConfigReader {
 	//TODO : read from class path
 	public void readConfiguration() throws IOException {
 		Properties properties = new Properties();
-		InputStream configInputStream =  getClass().getClassLoader().getResourceAsStream("config.properties");		
+		//InputStream configInputStream =  getClass().getClassLoader().getResourceAsStream("config.properties");		
+		FileInputStream configInputStream=new FileInputStream(new File("C:\\Users\\muralidharg\\git\\STAF\\staf\\src\\com\\staf\\properties\\config.properties"));
 		properties.load(configInputStream);
 		configInputStream.close();
 		this.setBrowserType(properties.getProperty("BROWSER_TYPE"));
