@@ -41,7 +41,7 @@ public class Browser {
 		driver.get(appurl);
 		
 	}
-
+	//Maximize
 	public static void maximize(){
 			driver.manage().window().maximize();
 			log.info("maximized the browser");
