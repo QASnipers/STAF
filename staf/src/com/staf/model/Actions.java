@@ -3,6 +3,7 @@ package com.staf.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -10,7 +11,7 @@ import com.staf.common.*;
 
 public class Actions {
 	private static int count = 0;
-	
+	static Logger log=Logger.getLogger(Actions.class.getClass());
 	protected static WebElement action(UIObject obj) {
 		WebElement element = null;
 		try{
@@ -18,36 +19,42 @@ public class Actions {
 				element = Browser.driver.findElement(By.id(obj.getId()));
 				List <WebElement> elements = Browser.driver.findElements(By.id(obj.getId()));
 				count = elements.size();
+				log.info("Count of "+obj.getName()+" "+count);
 			}
 			
 			else if(obj.getIdentifier().equalsIgnoreCase("Byname")){
 				element = Browser.driver.findElement(By.name(obj.getName()));
 				List <WebElement> elements = Browser.driver.findElements(By.name(obj.getName()));
 				count = elements.size();
+				log.info("Count of "+obj.getName()+" "+count);
 			}
 			
 			else if(obj.getIdentifier().equalsIgnoreCase("Byxpath")){
 				element = Browser.driver.findElement(By.xpath(obj.getXpath()));
 				List <WebElement> elements = Browser.driver.findElements(By.xpath(obj.getXpath()));
 				count = elements.size();
+				log.info("Count of "+obj.getName()+" "+count);
 			}
 			
 			else if(obj.getIdentifier().equalsIgnoreCase("BycssSelector")){
 				element = Browser.driver.findElement(By.cssSelector(obj.getCssselector()));
 				List <WebElement> elements = Browser.driver.findElements(By.cssSelector(obj.getCssselector()));
 				count = elements.size();
+				log.info("Count of "+obj.getName()+" "+count);
 			}
 			
 			else if(obj.getIdentifier().equalsIgnoreCase("Bypartiallinktext")){
 				element = Browser.driver.findElement(By.partialLinkText(obj.getText()));
 				List <WebElement> elements = Browser.driver.findElements(By.partialLinkText(obj.getText()));
 				count = elements.size();
+				log.info("Count of "+obj.getName()+" "+count);
 			}
 			
 			else if(obj.getIdentifier().equalsIgnoreCase("Bylinktext")){
 				element = Browser.driver.findElement(By.linkText(obj.getText()));
 				List <WebElement> elements = Browser.driver.findElements(By.linkText(obj.getText()));
 				count = elements.size();
+				log.info("Count of "+obj.getName()+" "+count);
 			}
 			
 			else if(obj.getIdentifier().equalsIgnoreCase("Bytagname")){
@@ -55,10 +62,12 @@ public class Actions {
 					element = Browser.driver.findElement(By.xpath("//input[@type=" + obj.getType() + "']"));
 					List <WebElement> elements = Browser.driver.findElements(By.xpath("//input[@type=" + obj.getType() + "']"));
 					count = elements.size();
+					log.info("Count of "+obj.getName()+" "+count);
 				}else{
 					element = Browser.driver.findElement(By.tagName(obj.getType()));
 					List <WebElement> elements = Browser.driver.findElements(By.tagName(obj.getType()));
 					count = elements.size();
+					log.info("Count of "+obj.getName()+" "+count);
 				}
 				
 			}
@@ -96,7 +105,8 @@ public class Actions {
 		WebElement element = action(obj);
 	
 		if(element!=null){
-			element.click();	
+			element.click();
+			log.info("Clicked "+element.getText());
 		}
 	}
 	
@@ -106,6 +116,7 @@ public class Actions {
 		boolean visible = false;
 		if(element!=null){
 			visible = element.isDisplayed();
+			log.info("Returns " + element.getText() + "visibility and the visibility is "+visible);
 		}
 		return visible;
 	}
