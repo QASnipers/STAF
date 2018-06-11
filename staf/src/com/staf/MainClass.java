@@ -32,7 +32,7 @@ public class MainClass  {
 	}
 	@Test
 	public void test2(){
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
 	}
 	
 	@AfterTest
