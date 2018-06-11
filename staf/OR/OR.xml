@@ -1,0 +1,17 @@
+<OR>
+	<PG_01_SearchVehicle>
+		<PickupLocation type="input" id="pickupLocationTextBox" name="pickupLocationTextBox" xpath="//*[@id='pickupLocationTextBox']" identifier="Byid"></PickupLocation>
+		<PickupTime type ="select" id="pickupTime" name="startDateTime" xpath="//*[@id='startDateTime" identifier ="Byid" ></PickupTime>
+		<DropOffTime type ="select" id="dropoffTime" name="endDateTime" xpath="//*[@id='endDateTime" identifier ="Byid" ></DropOffTime>
+		<Search type="a" id="continueButton" name ="search" xpath="//*[@id='search']" identifier ="Byid"></Search>
+		<ModifyExistingReservation type = "a" text = "Modify an Existing Reservation" id ="Modify an Existing Reservation" identifier = "Bylinktext"></ModifyExistingReservation>
+	</PG_01_SearchVehicle>
+	<PG_02_SearchResults>
+		<ChangeDateTime type = "a" text="change" index = "0" identifier="Byindex"></ChangeDateTime>
+		<ChangeRentersAge type="a" text="change" xpath = "//a[contains(@href,'changeAge')]" identifier="Byxpath"></ChangeRentersAge>
+		<Select type="a" text= "Select" index="0" identifier="Byindex"></Select>
+	</PG_02_SearchResults>
+	<PG_03_RentersAge>
+		<AgeRadioGroup type ="radio" name = "tagRadioGroup" identifier="Byname"></AgeRadioGroup>
+	</PG_03_RentersAge>
+</OR>

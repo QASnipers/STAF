@@ -15,21 +15,29 @@ import org.testng.collections.CollectionUtils;
 
 public class Dropdown extends Actions {
 	static Logger log = Logger.getLogger(Browser.class.getClass());
+	 
 	//Selecting an item
 	public static void selectIitem(UIObject obj, String tdata){
 		WebElement element = action(obj);
+		boolean optnChk = false;
 		try{
 			List<WebElement> options = element.findElements(By.tagName("option"));
 		    if(CollectionUtils.hasElements(options)){
 			    for(WebElement option : options){
 			        if(option.getText().equals(tdata)) {
 			            option.click();
-			            log.info("Selected item "+tdata+" in "+ element.getText());
+			            log.info("Selected item "+tdata+" in "+ obj.getObjectName());
+			            optnChk = true;
 			            break;
 			        }
 			    }
+			    if(optnChk = false){
+			    	System.out.println("nothing");
+			    	log.error("item " + tdata + " not found in "+obj.getObjectName());
+			    	System.out.println("item " + tdata + " not found in "+obj.getObjectName());
+			    }
 			    }else{
-			    	log.error( element.getText() + " not found ");
+			    	log.error( obj.getObjectName()+ " not found ");
 			    }
 			}catch (Exception ex){
 				log.error( " No values found in the drop down " + obj.getObjectName());

@@ -22,9 +22,7 @@ public class Actions {
 		WebElement element = null;
 		try{
 		if(obj.getIdentifier().equalsIgnoreCase("Byid")){
-			System.out.println("Here is the ID: " + obj.getId());
 			element = Browser.driver.findElement(By.id(obj.getId()));
-			
 		}else if(obj.getIdentifier().equalsIgnoreCase("Byname")){
 			element = Browser.driver.findElement(By.name(obj.getName()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Byxpath")){
@@ -44,7 +42,7 @@ public class Actions {
 			}
 		
 		}}catch(Exception ex){
-			System.out.println("Error occured with the object "+obj.getObjectName()+" and the error: "+ex.getLocalizedMessage());
+			System.out.println("Error occured with the object "+obj.getObjectName()+" and the error: "+ex.getMessage());
 			log.error("Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
 			testLog.log(Status.FAIL, "Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
 		}
