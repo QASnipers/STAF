@@ -2,94 +2,77 @@ package com.staf.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.collections.CollectionUtils;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.staf.common.*;
 
 public class Actions {
 	private static int count = 0;
+	
 	static Logger log=Logger.getLogger(Actions.class.getClass());
+	static ExtentTest testLog;
 	protected static WebElement action(UIObject obj) {
 		WebElement element = null;
 		try{
-			if(obj.getIdentifier().equalsIgnoreCase("Byid")){
-				element = Browser.driver.findElement(By.id(obj.getId()));
-				List <WebElement> elements = Browser.driver.findElements(By.id(obj.getId()));
-				count = elements.size();
-				log.info("Count of "+obj.getName()+" "+count);
-			}
+		if(obj.getIdentifier().equalsIgnoreCase("Byid")){
+			System.out.println("Here is the ID: " + obj.getId());
+			element = Browser.driver.findElement(By.id(obj.getId()));
 			
-			else if(obj.getIdentifier().equalsIgnoreCase("Byname")){
-				element = Browser.driver.findElement(By.name(obj.getName()));
-				List <WebElement> elements = Browser.driver.findElements(By.name(obj.getName()));
-				count = elements.size();
-				log.info("Count of "+obj.getName()+" "+count);
-			}
-			
-			else if(obj.getIdentifier().equalsIgnoreCase("Byxpath")){
-				element = Browser.driver.findElement(By.xpath(obj.getXpath()));
-				List <WebElement> elements = Browser.driver.findElements(By.xpath(obj.getXpath()));
-				count = elements.size();
-				log.info("Count of "+obj.getName()+" "+count);
-			}
-			
-			else if(obj.getIdentifier().equalsIgnoreCase("BycssSelector")){
+		}else if(obj.getIdentifier().equalsIgnoreCase("Byname")){
+			element = Browser.driver.findElement(By.name(obj.getName()));
+		}else if(obj.getIdentifier().equalsIgnoreCase("Byxpath")){
+			element = Browser.driver.findElement(By.xpath(obj.getXpath()));
+		}else if(obj.getIdentifier().equalsIgnoreCase("BycssSelector")){
 				element = Browser.driver.findElement(By.cssSelector(obj.getCssselector()));
-				List <WebElement> elements = Browser.driver.findElements(By.cssSelector(obj.getCssselector()));
-				count = elements.size();
-				log.info("Count of "+obj.getName()+" "+count);
-			}
-			
-			else if(obj.getIdentifier().equalsIgnoreCase("Bypartiallinktext")){
+		}else if(obj.getIdentifier().equalsIgnoreCase("Bypartiallinktext")){
 				element = Browser.driver.findElement(By.partialLinkText(obj.getText()));
-				List <WebElement> elements = Browser.driver.findElements(By.partialLinkText(obj.getText()));
-				count = elements.size();
-				log.info("Count of "+obj.getName()+" "+count);
-			}
-			
-			else if(obj.getIdentifier().equalsIgnoreCase("Bylinktext")){
+		}		
+		else if(obj.getIdentifier().equalsIgnoreCase("Bylinktext")){
 				element = Browser.driver.findElement(By.linkText(obj.getText()));
-				List <WebElement> elements = Browser.driver.findElements(By.linkText(obj.getText()));
-				count = elements.size();
-				log.info("Count of "+obj.getName()+" "+count);
-			}
-			
-			else if(obj.getIdentifier().equalsIgnoreCase("Bytagname")){
-				if(obj.getType().equalsIgnoreCase("radio") || obj.getType().equalsIgnoreCase("checkbox")){
+		}else if(obj.getIdentifier().equalsIgnoreCase("Bytagname")){
+			if(obj.getType().equalsIgnoreCase("radio") || obj.getType().equalsIgnoreCase("checkbox")){
 					element = Browser.driver.findElement(By.xpath("//input[@type=" + obj.getType() + "']"));
-					List <WebElement> elements = Browser.driver.findElements(By.xpath("//input[@type=" + obj.getType() + "']"));
+			}else{
+				element = Browser.driver.findElement(By.tagName(obj.getType()));
+			}
+		
+		}}catch(Exception ex){
+			System.out.println("Error occured with the object "+obj.getObjectName()+" and the error: "+ex.getLocalizedMessage());
+			log.error("Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
+			testLog.log(Status.FAIL, "Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
+		}
+		if(element!=null){
+			try{
+				List <WebElement> elements = Browser.driver.findElements(By.id(obj.getId()));
+				if(CollectionUtils.hasElements(elements)){
 					count = elements.size();
 					log.info("Count of "+obj.getName()+" "+count);
 				}else{
-					element = Browser.driver.findElement(By.tagName(obj.getType()));
-					List <WebElement> elements = Browser.driver.findElements(By.tagName(obj.getType()));
-					count = elements.size();
-					log.info("Count of "+obj.getName()+" "+count);
+					log.error(obj.getName() + " not found");
 				}
-				
+
+			}catch(NoSuchElementException ex){
+				log.error(ex.getMessage());
+			} catch(Exception ex){
+				System.out.println(ex.getMessage());
 			}
 			
-			else if(obj.getIdentifier().equalsIgnoreCase("Byclassname")){
-				element = Browser.driver.findElement(By.className(obj.getClassname()));
-				List <WebElement> elements = Browser.driver.findElements(By.className(obj.getClassname()));
-				count = elements.size();
-			}
-			
-			else if(obj.getIdentifier().equalsIgnoreCase("Byindex")){
-				List <WebElement> elements = getElements(obj);
-				if(elements.isEmpty()==false){
-					element = elements.get(Integer.parseInt(obj.getIndex()));
-				}
-			}
-			
-		}catch (Exception e){
-			System.out.println(e.getMessage());
+		}else{
+			log.error(obj.getName()+" not found");
 		}
 		return element;
 	}
+	
+	
+	
+	
 
 	// get the count of objects.
 	public static int getCount(UIObject obj) {
@@ -121,7 +104,7 @@ public class Actions {
 		return visible;
 	}
 	
-	// returns object is enabled
+	// returns object is enabledty
 	public static boolean isEnabled(UIObject obj){
 		WebElement element = action(obj);
 		boolean enabled = false;

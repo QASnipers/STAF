@@ -18,7 +18,8 @@ import com.staf.model.UIObject;
 public class UIObjectReader {
 	
 	public static Map<String, UIObject> parsePageUIObjects(String pageName) {
-		String objectFile = ConfigReader.getInstance().getObjectsFile();
+		//String objectFile = ConfigReader.getInstance().getObjectsFile();
+		String objectFile = System.getProperty("user.dir")+"//OR//OR.XML";
 		Map<String, UIObject> pageUIObjectsMap = new HashMap<String, UIObject>();
 		try {			
 			File fXmlFile = new File(objectFile);		//TODO : read from class path	

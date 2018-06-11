@@ -28,11 +28,13 @@ public class Browser {
 
 	public static void launchBrowser(String type, String appurl){
 		if (type.equalsIgnoreCase("FF")){
+			System.setProperty("webdriver.gecko.driver","C:\\STAF\\Drivers\\geckodriver.exe" );
 			driver = new FirefoxDriver();
 			log.info("starting the firefox browser");
 		}else if(type.equalsIgnoreCase("CHROME")){
 			//download chrome driver and keep it under drivers of the current project
-			System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "\\drivers\\chromedriver.exe" );
+			//System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "\\drivers\\chromedriver.exe" );
+			System.setProperty("webdriver.chrome.driver","C:\\MyFramework\\Drivers\\chromedriver.exe" );
 			driver = new ChromeDriver();
 		}else if(type.equalsIgnoreCase("IE")){
 			System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe" );
@@ -125,7 +127,7 @@ public class Browser {
 		
 		Thread.sleep(3000);
 		File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		String path="D:\\MyFramework\\WorkDay\\Screens\\"+ConfigReader.getInstance().getTestCaseName()+"\\" +ConfigReader.getInstance().getTestCaseName()+"_"+System.currentTimeMillis()+".png";
+		String path="C:\\STAF\\Screens\\"+ConfigReader.getInstance().getTestCaseName()+"\\" +ConfigReader.getInstance().getTestCaseName()+"_"+System.currentTimeMillis()+".png";
 		FileUtils.copyFile(src, new File(path));
 		
 	}

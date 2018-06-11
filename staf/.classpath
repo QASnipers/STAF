@@ -2,10 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="drivers"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7"/>
-	<classpathentry kind="lib" path="lib/selenium-java-2.42.2.jar"/>
-	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.42.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_131"/>
 	<classpathentry kind="lib" path="lib/jxl.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/client-combined-3.4.0-nodeps.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/selenium-server-standalone-3.4.0.jar"/>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-3.1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/testng-6.9.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -31,18 +31,19 @@ public class PG_01_SearchVehicle extends Page{
 	}
 
 	public void enterCarSearchDetails(){
+		Editbox.click(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickUPLocation));
 		Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickUPLocation), this.getData().get(DataConstants.PG_01_PickUPLocation)[ConfigReader.getInstance().getDataCurrentRow()]);
-		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupMonth), this.getData().get(DataConstants.PG_01_PickupMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
-		Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupDay), this.getData().get(DataConstants.PG_01_PickupDay)[ConfigReader.getInstance().getDataCurrentRow()]);
+		//Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupMonth), this.getData().get(DataConstants.PG_01_PickupMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
+		//Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupDay), this.getData().get(DataConstants.PG_01_PickupDay)[ConfigReader.getInstance().getDataCurrentRow()]);
 		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupTime),this.getData().get(DataConstants.PG_01_PickupTime)[ConfigReader.getInstance().getDataCurrentRow()]);
 		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffMonth), this.getData().get(DataConstants.PG_01_DropOffMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
-		Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffDay), this.getData().get(DataConstants.PG_01_DropOffDay)[ConfigReader.getInstance().getDataCurrentRow()]);
-		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffTime), this.getData().get(DataConstants.PG_01_DropOffTime)[ConfigReader.getInstance().getDataCurrentRow()]);
+		//Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffDay), this.getData().get(DataConstants.PG_01_DropOffDay)[ConfigReader.getInstance().getDataCurrentRow()]);
+		//Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffTime), this.getData().get(DataConstants.PG_01_DropOffTime)[ConfigReader.getInstance().getDataCurrentRow()]);
 		System.out.println("Entered search criteria");
 	}
 	
 	public void clickSearch(){
-		Button.click(this.getPageObjectsMap().get(ObjectConstants.PG_01_Search));
+		Link.click(this.getPageObjectsMap().get(ObjectConstants.PG_01_Search));
 	}
 	
 	public void clickModifyExistingReservation(){

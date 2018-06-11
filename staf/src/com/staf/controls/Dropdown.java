@@ -11,20 +11,32 @@ import com.staf.model.Actions;
 import com.staf.model.UIObject;
 
 import org.openqa.selenium.support.ui.Select;
+import org.testng.collections.CollectionUtils;
 
 public class Dropdown extends Actions {
 	static Logger log = Logger.getLogger(Browser.class.getClass());
 	//Selecting an item
 	public static void selectIitem(UIObject obj, String tdata){
 		WebElement element = action(obj);
-	    List<WebElement> options = element.findElements(By.tagName("option"));
-	    for(WebElement option : options){
-	        if(option.getText().equals(tdata)) {
-	            option.click();
-	            log.info("Selected item "+tdata+" in "+ element.getText());
-	            break;
-	        }
-	    }
+		try{
+			List<WebElement> options = element.findElements(By.tagName("option"));
+		    if(CollectionUtils.hasElements(options)){
+			    for(WebElement option : options){
+			        if(option.getText().equals(tdata)) {
+			            option.click();
+			            log.info("Selected item "+tdata+" in "+ element.getText());
+			            break;
+			        }
+			    }
+			    }else{
+			    	log.error( element.getText() + " not found ");
+			    }
+			}catch (Exception ex){
+				log.error( " No values found in the drop down " + obj.getObjectName());
+				System.out.println(" No values found in the drop down " + obj.getObjectName());
+			}
+		
+
 	}
 	
 	// returns item name already selected
