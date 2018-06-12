@@ -8,7 +8,20 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/client-combined-3.4.0-nodeps.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/selenium-server-standalone-3.4.0.jar"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-3.1.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/testng-6.9.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/bson-3.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/freemarker-2.3.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/jcommander-1.48.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/jsoup-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/mongodb-driver-3.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/mongodb-driver-core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/lib/testng-6.9.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/muralik/git/STAF/staf/STAF/staf/lib/extentreports-java-3.1.5/extentreports-3.1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.testng.Reporter;
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -49,10 +52,10 @@ public class ExcelReader {
 				}
 				workbook.close();
 		}catch(FileNotFoundException e){
-			System.out.println("Specified Test data file " + testDataFile + " not found");
+			ReportReader.report("fail","Specified Test data file " + testDataFile + " not found");
 			throw new FileNotFoundException();
 		}catch(Exception e){
-			System.out.println("Unknown error. Please check Test Data file");
+			ReportReader.report("fail","Unknown error. Please check Test Data file");
 			throw new Exception();
 		}		
 		return colCount;
