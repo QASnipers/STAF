@@ -4,20 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.collections.CollectionUtils;
 
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
 import com.staf.common.*;
+import com.staf.reader.ReportReader;
 
-public class Actions {
+public class Actions  {
 	private static int count = 0;
-	
-	static Logger log=Logger.getLogger(Actions.class.getClass());
-	static ExtentTest testLog;
 	protected static WebElement action(UIObject obj) {
 		WebElement element = null;
 		try{
@@ -43,27 +38,27 @@ public class Actions {
 		
 		}}catch(Exception ex){
 			System.out.println("Error occured with the object "+obj.getObjectName()+" and the error: "+ex.getMessage());
-			log.error("Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
-			testLog.log(Status.FAIL, "Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
+			
+			ReportReader.report("fail","Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
 		}
 		if(element!=null){
 			try{
 				List <WebElement> elements = Browser.driver.findElements(By.id(obj.getId()));
 				if(CollectionUtils.hasElements(elements)){
 					count = elements.size();
-					log.info("Count of "+obj.getName()+" "+count);
+					ReportReader.report("info","Count of "+obj.getName()+" "+count);
 				}else{
-					log.error(obj.getName() + " not found");
+					ReportReader.report("fail",obj.getName() + " not found");
 				}
 
 			}catch(NoSuchElementException ex){
-				log.error(ex.getMessage());
+				ReportReader.report("fail",obj.getName() + " not found");
 			} catch(Exception ex){
-				System.out.println(ex.getMessage());
+				ReportReader.report("fail",obj.getName() + " not found");
 			}
 			
 		}else{
-			log.error(obj.getName()+" not found");
+			ReportReader.report("fail",obj.getName() + " not found");
 		}
 		return element;
 	}
@@ -87,7 +82,8 @@ public class Actions {
 	
 		if(element!=null){
 			element.click();
-			log.info("Clicked "+element.getText());
+			ReportReader.report("info","Clicked "+element.getText());
+			
 		}
 	}
 	
@@ -97,7 +93,7 @@ public class Actions {
 		boolean visible = false;
 		if(element!=null){
 			visible = element.isDisplayed();
-			log.info("Returns " + element.getText() + "visibility and the visibility is "+visible);
+			ReportReader.report("info","Returns " + element.getText() + "visibility and the visibility is "+visible);
 		}
 		return visible;
 	}
@@ -280,7 +276,7 @@ public class Actions {
 			return elements;
 			
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			ReportReader.report("fail","Error found: "+e.getMessage());
 		}
 		
 		return elements;

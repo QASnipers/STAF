@@ -1,7 +1,7 @@
 <OR>
 	<PG_01_SearchVehicle>
 		<PickupLocation type="input" id="pickupLocationTextBox" name="pickupLocationTextBox" xpath="//*[@id='pickupLocationTextBox']" identifier="Byid"></PickupLocation>
-		<PickupTime type ="select" id="pickupTime" name="startDateTime" xpath="//*[@id='startDateTime" identifier ="Byid" ></PickupTime>
+		<PickupTime type ="select" id="pickupTime" name="startDateTime" xpath="//*[@id='startDateTime']" identifier ="Byid" ></PickupTime>
 		<DropOffTime type ="select" id="dropoffTime" name="endDateTime" xpath="//*[@id='endDateTime" identifier ="Byid" ></DropOffTime>
 		<Search type="a" id="continueButton" name ="search" xpath="//*[@id='search']" identifier ="Byid"></Search>
 		<ModifyExistingReservation type = "a" text = "Modify an Existing Reservation" id ="Modify an Existing Reservation" identifier = "Bylinktext"></ModifyExistingReservation>

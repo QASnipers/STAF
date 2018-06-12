@@ -9,11 +9,12 @@ import com.staf.controls.*;
 import com.staf.model.Page;
 import com.staf.reader.ConfigReader;
 import com.staf.reader.ExcelReader;
+import com.staf.reader.ReportReader;
 
 public class PG_01_SearchVehicle extends Page{
 	
 	private Map<String, String[]> data = new HashMap<String, String[]>(); 
-	//private int index =  ConfigReader.getInstance().getDataCurrentRow();
+	
 	public Map<String, String[]> getData() {
 		return data;
 	}
@@ -36,10 +37,10 @@ public class PG_01_SearchVehicle extends Page{
 		//Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupMonth), this.getData().get(DataConstants.PG_01_PickupMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
 		//Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupDay), this.getData().get(DataConstants.PG_01_PickupDay)[ConfigReader.getInstance().getDataCurrentRow()]);
 		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_PickupTime),this.getData().get(DataConstants.PG_01_PickupTime)[ConfigReader.getInstance().getDataCurrentRow()]);
-		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffMonth), this.getData().get(DataConstants.PG_01_DropOffMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
+		//Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffMonth), this.getData().get(DataConstants.PG_01_DropOffMonth)[ConfigReader.getInstance().getDataCurrentRow()]);
 		//Editbox.type(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffDay), this.getData().get(DataConstants.PG_01_DropOffDay)[ConfigReader.getInstance().getDataCurrentRow()]);
-		//Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffTime), this.getData().get(DataConstants.PG_01_DropOffTime)[ConfigReader.getInstance().getDataCurrentRow()]);
-		System.out.println("Entered search criteria");
+		Dropdown.selectIitem(this.getPageObjectsMap().get(ObjectConstants.PG_01_DropOffTime), this.getData().get(DataConstants.PG_01_DropOffTime)[ConfigReader.getInstance().getDataCurrentRow()]);
+		ReportReader.report("info", "Entered search criteria");
 	}
 	
 	public void clickSearch(){
