@@ -15,6 +15,9 @@ public class Actions  {
 	private static int count = 0;
 	protected static WebElement action(UIObject obj) {
 		WebElement element = null;
+		if (obj != null){
+			
+		
 		try{
 		if(obj.getIdentifier().equalsIgnoreCase("Byid")){
 			element = Browser.driver.findElement(By.id(obj.getId()));
@@ -40,13 +43,15 @@ public class Actions  {
 			System.out.println("Error occured with the object "+obj.getObjectName()+" and the error: "+ex.getMessage());
 			
 			ReportReader.report("fail","Error occured with  "+obj.getObjectName()+" and the error: "+ex.getMessage());
+		}}else{
+			ReportReader.report("fail","Something wrong with XML please check the OR file");
 		}
 		if(element!=null){
 			try{
 				List <WebElement> elements = Browser.driver.findElements(By.id(obj.getId()));
 				if(CollectionUtils.hasElements(elements)){
 					count = elements.size();
-					ReportReader.report("info","Count of "+obj.getName()+" "+count);
+					//ReportReader.report("info","Count of "+obj.getName()+" "+count);
 				}else{
 					ReportReader.report("fail",obj.getName() + " not found");
 				}
