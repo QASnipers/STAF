@@ -7,6 +7,10 @@ import java.util.NoSuchElementException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.collections.CollectionUtils;
 
 import com.staf.common.*;
@@ -14,16 +18,19 @@ import com.staf.reader.ReportReader;
 
 public class Actions  {
 	private static int count = 0;
+	static WebDriverWait wait = new WebDriverWait(Browser.driver, 15);
 	protected static WebElement action(UIObject obj) {
 		WebElement element = null;
 	if (obj != null){
 		try{
 		if(obj.getIdentifier().equalsIgnoreCase("Byid")){
-			element = Browser.driver.findElement(By.id(obj.getId()));
+			
+			element =   Browser.driver.findElement(By.id(obj.getId()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Byname")){
 			element = Browser.driver.findElement(By.name(obj.getName()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Byxpath")){
-			element = Browser.driver.findElement(By.xpath(obj.getXpath()));
+			element = wait.until(ExpectedConditions.visibilityOf(Browser.driver.findElement(By.xpath(obj.getXpath()))));
+			//element = Browser.driver.findElement(By.xpath(obj.getXpath()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("BycssSelector")){
 				element = Browser.driver.findElement(By.cssSelector(obj.getCssselector()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Bypartiallinktext")){
