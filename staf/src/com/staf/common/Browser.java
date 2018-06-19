@@ -35,15 +35,13 @@ public class Browser {
 			driver = new FirefoxDriver();
 			log.info("starting the firefox browser");
 		}else if(type.equalsIgnoreCase("CHROME")){
-			//download chrome driver and keep it under drivers of the current project
-			//System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "\\drivers\\chromedriver.exe" );
-			System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "\\drivers\\chromedriver.exe" );
+				System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "\\drivers\\chromedriver.exe" );
 			driver = new ChromeDriver();
 		}else if(type.equalsIgnoreCase("IE")){
 			System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe" );
 			driver = new InternetExplorerDriver();
 		}
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get(appurl);
 		
 	}
@@ -73,10 +71,9 @@ public class Browser {
 		ReportReader.logInfo("Deleted all the cookies");
 	}
 	
-	public static void waitForElement(UIObject obj) throws Exception{
+	public static void waitForElement(UIObject obj, int seconds) throws Exception{
 
-		wait=new WebDriverWait(driver, 320);
-		//wait.until(ExpectedConditions.visibilityOf(element));
+		wait=new WebDriverWait(driver, seconds);
 		ReportReader.logInfo("waiting for element " + obj.getObjectName());
 		try{
 			
@@ -113,8 +110,9 @@ public class Browser {
 		}
 		
 
-	public static void waitForPage(String pageTitle){
-		wait.until(ExpectedConditions.titleIs(pageTitle));
+	public static void waitForPage(String pageTitle,int seconds){
+		WebDriverWait wait  =  new WebDriverWait(driver,seconds);
+		wait.until(ExpectedConditions.titleContains(pageTitle));
 	}
 	
 	public static boolean isObjectExist(UIObject obj){
