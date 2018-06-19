@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.testng.Reporter;
 
+import com.aventstack.extentreports.Status;
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -20,6 +22,7 @@ public class ExcelReader {
 		int rowCount = 0;
 		Sheet sheet = null;
 		try{
+			//"C://Users//muralik//git//STAF//staf//STAF//staf//TestData//"+	
 		      Workbook workbook = Workbook.getWorkbook(new File(testDataFile));
 		      sheet = workbook.getSheet(sheetName);
 				if(sheet != null){
@@ -30,8 +33,10 @@ public class ExcelReader {
 				workbook.close();
 		}catch(FileNotFoundException e){
 			System.out.println("Specified Test data file " + testDataFile + " not found");
+			ReportReader.report("fail","Specified Test data file " + testDataFile + " not found" );
 			throw new FileNotFoundException();
 		}catch(Exception e){
+			System.out.println(e.getMessage());
 			System.out.println("Unknown error. Please check Test Data file");
 			throw new Exception();
 		}		
@@ -66,7 +71,8 @@ public class ExcelReader {
 		  int rowCount = 0;
 		  int colCount = 0;
 		  int i =0;
-		  String testDataFile = ConfigReader.getInstance().getTestDataFilesPath()+ConfigReader.getInstance().getTestCaseName()+".xls";
+		  //String testDataFile = ConfigReader.getInstance().getTestDataFilesPath()+ConfigReader.getInstance().getTestCaseName()+".xls";
+		  String testDataFile = System.getProperty("user.dir")+"//Testdata//"+ConfigReader.getInstance().getTestCaseName()+".xls";
 		  String environment = ConfigReader.getInstance().getEnvironment();	
 		  //This object is returned
 		  Map<String, String[]> dataSet = new HashMap<String, String[]>();
@@ -126,6 +132,7 @@ public class ExcelReader {
 			  
 		  }catch(Exception e){
 			  System.out.println("Unknown exception found");
+			  System.out.println(e.getMessage());
 			  throw new Exception();
 		  }
 		  return dataSet;

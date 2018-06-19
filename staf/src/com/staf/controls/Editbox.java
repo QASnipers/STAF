@@ -14,7 +14,8 @@ public class Editbox extends Actions {
 		if(element!=null){
 			element.clear();
 			element.sendKeys(tdata);
-			ReportReader.report("info", "Entered " +tdata+" in "+obj.getObjectName());
+			//ReportReader.report("info", "Entered " +tdata+" in "+obj.getObjectName());
+			ReportReader.logInfo("Entered " +tdata+" in "+obj.getObjectName());
 		}
 	}
 	public static void type(UIObject obj, String tdata, int delayInMilliSec) {
@@ -25,6 +26,7 @@ public class Editbox extends Actions {
 			        char c = tdata.charAt(i);
 			        String s = new StringBuilder().append(c).toString();
 			        element.sendKeys(s);
+			        ReportReader.logInfo("Entered " +tdata+" in "+obj.getObjectName());
 			        try {
 						Thread.sleep(delayInMilliSec);
 					} catch (InterruptedException e) {
@@ -32,8 +34,7 @@ public class Editbox extends Actions {
 						e.printStackTrace();
 					}
 			    } 
-			   ReportReader.report("info", "Entered " +tdata+" in "+obj.getObjectName());
-			
+
 		}
 	
 	}

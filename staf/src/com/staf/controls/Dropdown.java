@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import com.staf.common.Browser;
 import com.staf.model.Actions;
 import com.staf.model.UIObject;
+import com.staf.reader.ReportReader;
 
 import org.openqa.selenium.support.ui.Select;
 import org.testng.collections.CollectionUtils;
@@ -26,21 +27,21 @@ public class Dropdown extends Actions {
 			    for(WebElement option : options){
 			        if(option.getText().equals(tdata)) {
 			            option.click();
-			            log.info("Selected item "+tdata+" in "+ obj.getObjectName());
+			            //log.info("Selected item "+tdata+" in "+ obj.getObjectName());
+			            ReportReader.logInfo("Selected item "+tdata+" in "+ obj.getObjectName());
 			            optnChk = true;
 			            break;
 			        }
 			    }
 			    if(optnChk = false){
-			    	System.out.println("nothing");
-			    	log.error("item " + tdata + " not found in "+obj.getObjectName());
+			    	ReportReader.report("fail","item " + tdata + " not found in "+obj.getObjectName());
 			    	System.out.println("item " + tdata + " not found in "+obj.getObjectName());
 			    }
 			    }else{
-			    	log.error( obj.getObjectName()+ " not found ");
+			    	ReportReader.report("fail", obj.getObjectName()+ " not found ");
 			    }
 			}catch (Exception ex){
-				log.error( " No values found in the drop down " + obj.getObjectName());
+				ReportReader.report("fail"," No values found in the drop down " + obj.getObjectName());
 				System.out.println(" No values found in the drop down " + obj.getObjectName());
 			}
 		
