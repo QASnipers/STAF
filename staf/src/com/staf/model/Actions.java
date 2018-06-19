@@ -106,6 +106,21 @@ public class Actions  {
 		}
 	}
 	
+	public static void click(WebElement element) {
+		
+	
+		if(element!=null){
+			try {
+				element.click();
+				
+				ReportReader.logInfo("Clicked "+element.getText());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				ReportReader.report("fail","Unable to Click "+ element.getText()+" and the error "+e.getMessage());
+			}
+		}
+	}
+	
 	// Verify visibility of an object
 	public static boolean isVisible(UIObject obj){
 		WebElement element = action(obj);
