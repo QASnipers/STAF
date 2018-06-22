@@ -1,12 +1,20 @@
 package com.staf.reader;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.Assert;
 import org.testng.Reporter;
 
 import com.aventstack.extentreports.Status;
@@ -16,138 +24,83 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 public class ExcelReader {
-	
-	// get Rows count from the sheet. Returns only when data found.
-	public static int getDataRowCount(String testDataFile, String sheetName) throws Exception{
-		int rowCount = 0;
-		Sheet sheet = null;
-		try{
-			//"C://Users//muralik//git//STAF//staf//STAF//staf//TestData//"+	
-		      Workbook workbook = Workbook.getWorkbook(new File(testDataFile));
-		      sheet = workbook.getSheet(sheetName);
-				if(sheet != null){
-					rowCount = sheet.getRows();
-				}else{
-					rowCount = -1;	
+	static Map<String, List<String>> columnNames;
+	public static void loadData(String testDataFile, String sheetName){
+		columnNames  = new HashMap<String, List<String>>();
+		DataFormatter dataFormatter = new DataFormatter();
+		
+		int colIterator,colCount, rowCount,ro;
+		try {
+			
+			FileInputStream fileInputStream = new FileInputStream(testDataFile);
+			XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+			XSSFSheet worksheet = workbook.getSheet(sheetName);
+			XSSFRow row = null;
+			XSSFCell cell = null;
+			row = worksheet.getRow(0);
+			colCount = row.getLastCellNum();
+			rowCount = worksheet.getLastRowNum();
+			if(colCount == 0){
+				ReportReader.report("fail", "Cannot continue. File is empty or First row is empty in data file "+testDataFile);
+				Assert.fail();
+			}
+			if(rowCount<1){
+				ReportReader.report("fail", "Cannot continue. File is empty or No data found in the data file "+testDataFile);
+				Assert.fail();
+			}
+			for(colIterator = 0; colIterator<=colCount-1; colIterator++){
+				List<String> rowValues = new ArrayList<>();
+				for(ro =1; ro<=rowCount; ro++){
+					cell = worksheet.getRow(ro).getCell(colIterator);
+					String cellData = dataFormatter.formatCellValue(cell);
+					//String cellData = (worksheet.getRow(ro).getCell(colIterator).getRawValue());
+					rowValues.add(cellData);
 				}
-				workbook.close();
-		}catch(FileNotFoundException e){
-			System.out.println("Specified Test data file " + testDataFile + " not found");
-			ReportReader.report("fail","Specified Test data file " + testDataFile + " not found" );
-			throw new FileNotFoundException();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			System.out.println("Unknown error. Please check Test Data file");
-			throw new Exception();
-		}		
-		return rowCount;
+				String colName = row.getCell(colIterator).getStringCellValue();
+				columnNames.put(colName, rowValues);
+			}
+			String anyColumn = columnNames.keySet().toArray()[0].toString();
+			int rowsCount = columnNames.get(anyColumn).size();
+			ConfigReader.getInstance().setDataRowsCount(rowsCount-1);
+		} catch (FileNotFoundException e) {
+			ReportReader.report("fail", "Test data file not found : "+testDataFile);
+			Assert.fail();
+		} catch (IOException e) {
+			ReportReader.report("fail", "Unknown Error found while reading the test data file "+testDataFile+" "+e.getMessage());
+			Assert.fail();
+		}
 	}
 	
-	// get Columns count from the sheet. Returns only when data found.
-	public static int getDatColumnsCount(String testDataFile, String sheetName) throws Exception{
-		int colCount = 0;
-		Sheet sheet = null;
-		try{
-		      Workbook workbook = Workbook.getWorkbook(new File(testDataFile));
-		      sheet = workbook.getSheet(sheetName);
-				if(sheet != null){
-					colCount = sheet.getColumns();
-				}else{
-					colCount = -1;	
+	
+	public static Map<String, String[]> readTestData(String[] pageDataFields) throws Exception{
+		
+		String testDataFile = System.getProperty("user.dir") +"//TestData//"+ 							  
+			    ConfigReader.getInstance().getTestCaseName()+".xlsx";
+		String sheetName = ConfigReader.getInstance().getEnvironment();
+		if (columnNames==null){
+			loadData(testDataFile,sheetName);
+		}
+		
+		Map<String, String[]> dataSet = new HashMap<String, String[]>();
+		boolean valCheck;
+		int rowCount = ConfigReader.getInstance().getDataRowsCount();
+		
+		for(int i=0; i<pageDataFields.length;i++){
+				valCheck = false;
+				if(columnNames.containsKey(pageDataFields[i]) == false){
+					ReportReader.report("info", "Column " + pageDataFields[i]+ " not found in test data file " );
+					valCheck = true;
 				}
-				workbook.close();
-		}catch(FileNotFoundException e){
-			ReportReader.report("fail","Specified Test data file " + testDataFile + " not found");
-			throw new FileNotFoundException();
-		}catch(Exception e){
-			ReportReader.report("fail","Unknown error. Please check Test Data file");
-			throw new Exception();
-		}		
-		return colCount;
-	}
-	
-	//Read Data from Test Data file as per the page properties.
-	public static Map<String, String[]> readTestData(String[] dataFields) throws Exception{
-		  int rowCount = 0;
-		  int colCount = 0;
-		  int i =0;
-		  //String testDataFile = ConfigReader.getInstance().getTestDataFilesPath()+ConfigReader.getInstance().getTestCaseName()+".xls";
-		  String testDataFile = System.getProperty("user.dir")+"//Testdata//"+ConfigReader.getInstance().getTestCaseName()+".xls";
-		  String environment = ConfigReader.getInstance().getEnvironment();	
-		  //This object is returned
-		  Map<String, String[]> dataSet = new HashMap<String, String[]>();
-		  
-		  //List of fields returned back
-		  List<String> headers = new ArrayList<String>();
-		  
-		  try{
-			  //get all fields from page and store it in a List. If no fields specified then do nothing
-			  //and return empty Map
-			  if(dataFields.length>=1){
-				  List <String> dataField = new ArrayList<String>();
-					 //Assigning it to a List. To make it easy to move on.
-					  for(int loop =0;loop<dataFields.length;loop++){
-						  dataField.add(dataFields[loop]);
-					  }
-					  //read data from Excel file when External data is YES. so mark ExternalData in Properties as YES;
-					  //if NO or any other value then return empty fields. So I can specify my data at test level. 
-					  if(ConfigReader.getInstance().getExternalData().equalsIgnoreCase("yes")){
-						  rowCount = getDataRowCount(testDataFile, environment);
-					      colCount = getDatColumnsCount(testDataFile,environment);
-
-						  //check whether any data is in the excel
-						  if(rowCount <= 0){
-							  System.out.println("No column names or data found in the data file. File Name: "+ testDataFile 
-									  			 + " Sheet Name: "+environment);
-						  }else if(rowCount == 1){ // No data found except columns
-							  dataSet = loadDataSetMap(headers, dataFields);
-							  return dataSet;
-						  }else{
-						      Workbook workbook = Workbook.getWorkbook(new File(testDataFile));
-						      Sheet sheet = workbook.getSheet(environment);
-							  for(i=0; i<colCount; i++){
-						    	  Cell col = sheet.getCell(i, 0);
-						    	  if(dataField.contains(col.getContents())){
-						    		  headers.add(col.getContents());
-							    	   String[] colValues = new String[rowCount-1];
-							    	   for(int j=1;j<rowCount;j++){
-							    		   Cell data = sheet.getCell(i, j);
-							    		   colValues[j-1]= data.getContents(); 
-							    	   }
-							    	   dataSet.put(headers.get(i), colValues);
-							    	   
-						    	  }else{// To do stop execution
-									  System.out.println("No matching names found in the data file. File Name: "+ testDataFile 
-									  			 + " Sheet Name: "+environment);
-						    	  }
-						      }							  
-							  workbook.close();
-						  }
-						  
-					  }else{  // returns only page fields when NO specified in external data 
-						  dataSet = loadDataSetMap(headers, dataFields);
-				    	  return dataSet;
-					  }
-			  }
-			  
-		  }catch(Exception e){
-			  System.out.println("Unknown exception found");
-			  System.out.println(e.getMessage());
-			  throw new Exception();
-		  }
-		  return dataSet;
-	}	  
-	
-	//Loading dataSet with empty data 
-	private static Map<String, String[]> loadDataSetMap(List<String> headers, String[] dataFields){
-		 Map<String, String[]> dataSet = new HashMap<String, String[]>();
-		 String[] colValues = new String[]{" "};
-			for(int i=0;i<dataFields.length;i++){
-				  headers.add(dataFields[i]);
-			  }
-			  for(int i=0;i<colValues.length;i++){
-				  dataSet.put(headers.get(i), colValues);
-			  }
+				String[] colValues = new String[rowCount+1];
+				for(int rows = 0; rows<=rowCount; rows++){
+					if(valCheck == true){
+						 colValues[rows]="";
+					}else{
+						colValues[rows]=columnNames.get(pageDataFields[i]).get(rows);
+					}
+				}
+				dataSet.put(pageDataFields[i], colValues);
+		}
 		return dataSet;
 	}
 }
