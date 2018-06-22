@@ -88,7 +88,7 @@ public class ExcelReader {
 		for(int i=0; i<pageDataFields.length;i++){
 				valCheck = false;
 				if(columnNames.containsKey(pageDataFields[i]) == false){
-					ReportReader.report("info", "Column " + pageDataFields[i]+ " not found in test data file " );
+					ReportReader.logInfo( "Column " + pageDataFields[i]+ " not found in test data file " );
 					valCheck = true;
 				}
 				String[] colValues = new String[rowCount+1];
