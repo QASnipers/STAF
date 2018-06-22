@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.collections.CollectionUtils;
 
 import com.staf.common.*;
@@ -24,7 +25,6 @@ public class Actions  {
 	if (obj != null){
 		try{
 		if(obj.getIdentifier().equalsIgnoreCase("Byid")){
-			
 			element =   Browser.driver.findElement(By.id(obj.getId()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Byname")){
 			element = Browser.driver.findElement(By.name(obj.getName()));
@@ -35,9 +35,15 @@ public class Actions  {
 				element = Browser.driver.findElement(By.cssSelector(obj.getCssselector()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Bypartiallinktext")){
 				element = Browser.driver.findElement(By.partialLinkText(obj.getText()));
-		}		
-		else if(obj.getIdentifier().equalsIgnoreCase("Bylinktext")){
+		}else if(obj.getIdentifier().equalsIgnoreCase("Bylinktext")){
 				element = Browser.driver.findElement(By.linkText(obj.getText()));
+		}else if(obj.getIdentifier().equalsIgnoreCase("Byindex")){
+			List <WebElement> elements = Browser.driver.findElements(By.xpath(obj.getXpath()));
+			if(elements.size()==0){
+				ReportReader.report("fail", obj.getObjectName()+" Object not found");
+				Assert.fail(obj.getObjectName()+" Object not found");
+			}
+			element = elements.get(Integer.parseInt(obj.getIndex()));
 		}else if(obj.getIdentifier().equalsIgnoreCase("Bytagname")){
 			if(obj.getType().equalsIgnoreCase("radio") || obj.getType().equalsIgnoreCase("checkbox")){
 					element = Browser.driver.findElement(By.xpath("//input[@type=" + obj.getType() + "']"));
@@ -46,34 +52,13 @@ public class Actions  {
 			}
 		
 		}}catch(Exception ex){
-			
 			ReportReader.report("fail","Error occured with  "+ obj.getObjectName()+" and the error: "+ex.getMessage());
+			Assert.fail("Error occured with  "+ obj.getObjectName());
 		}}else{
 			ReportReader.report("fail","Something wrong with XML. Object name is missing");
+			Assert.fail("Something wrong with XML. Object name is missing");
 		}
-		/*if(element!=null){
-			try{
-				List <WebElement> elements = Browser.driver.findElements(By.id(obj.getId()));
-				if(CollectionUtils.hasElements(elements)){
-					count = elements.size();
-					//ReportReader.report("info","Count of "+obj.getName()+" "+count);
-				}else{
-					
-					ReportReader.report("fail",obj.getObjectName() + " not found");
-				}
 
-			}catch(NoSuchElementException ex){
-				
-				ReportReader.report("fail",obj.getObjectName() + " not found");
-			} catch(Exception ex){
-				System.out.println("well no here");
-				ex.getMessage();
-				ReportReader.report("fail",obj.getObjectName() + " not found");
-			}
-			
-		}else{
-			ReportReader.report("fail",obj.getName() + " not found");
-		}*/
 		return element;
 	}
 	
@@ -107,12 +92,9 @@ public class Actions  {
 	}
 	
 	public static void click(WebElement element) {
-		
-	
 		if(element!=null){
 			try {
-				element.click();
-				
+				  element.click();
 				ReportReader.logInfo("Clicked "+element.getText());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
