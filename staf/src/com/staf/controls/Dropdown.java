@@ -12,6 +12,7 @@ import com.staf.model.UIObject;
 import com.staf.reader.ReportReader;
 
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.collections.CollectionUtils;
 
 public class Dropdown extends Actions {
@@ -36,17 +37,43 @@ public class Dropdown extends Actions {
 			    if(optnChk = false){
 			    	ReportReader.report("fail","item " + tdata + " not found in "+obj.getObjectName());
 			    	System.out.println("item " + tdata + " not found in "+obj.getObjectName());
+			    	Assert.fail("item " + tdata + " not found in "+obj.getObjectName());
 			    }
 			    }else{
 			    	ReportReader.report("fail", obj.getObjectName()+ " not found ");
+			    	Assert.fail(obj.getObjectName()+ " not found ");
 			    }
 			}catch (Exception ex){
 				ReportReader.report("fail"," No values found in the drop down " + obj.getObjectName());
 				System.out.println(" No values found in the drop down " + obj.getObjectName());
+				Assert.fail("No values found in the drop down " + obj.getObjectName());
 			}
 		
 
 	}
+	
+	//Selecting an item
+		public static void selectAutoCompleteItem(UIObject obj, String tdata){
+			String xPathtxt = obj.getXpath();
+			boolean optnChk = false;
+			List <WebElement> listItems = Browser.driver.findElements(By.xpath(xPathtxt));
+			if (listItems.size() ==  0 ){
+				ReportReader.report("fail"," No values found in the drop down " + obj.getObjectName());
+				System.out.println(" No values found in the drop down " + obj.getObjectName());
+				Assert.fail("No values found in the drop down " + obj.getObjectName());
+			}
+		    for (WebElement element : listItems){
+		    	if (element.getText().contains(tdata)){
+		    		optnChk = true;
+		    		element.click();
+		    	}
+		    }
+		    if(optnChk ==false){
+				ReportReader.report("fail",tdata+" not found in drop down " + obj.getObjectName());
+				System.out.println(tdata+" not found in drop down " + obj.getObjectName());
+				Assert.fail(tdata+" not found in drop down " + obj.getObjectName());
+		    }
+		}
 	
 	// returns item name already selected
 	public static String getSelectedItem(UIObject obj){

@@ -1,5 +1,6 @@
 package com.staf.controls;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import com.staf.common.Browser;
@@ -18,7 +19,7 @@ public class Editbox extends Actions {
 			ReportReader.logInfo("Entered " +tdata+" in "+obj.getObjectName());
 		}
 	}
-	public static void type(UIObject obj, String tdata, int delayInMilliSec) {
+	public static void type(UIObject obj, String tdata, int delayInSeconds) {
 		WebElement element = action(obj);
 		if(element!=null){
 			element.clear();
@@ -28,12 +29,21 @@ public class Editbox extends Actions {
 			        element.sendKeys(s);
 			        ReportReader.logInfo("Entered " +tdata+" in "+obj.getObjectName());
 			        try {
-						Thread.sleep(delayInMilliSec);
+						Thread.sleep(delayInSeconds*1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 			    } 
+
+		}
+	
+	}
+	
+	public static void type(UIObject obj,  Keys key) {
+		WebElement element = action(obj);
+		if(element!=null){
+			element.sendKeys(key);
 
 		}
 	
