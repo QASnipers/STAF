@@ -165,9 +165,9 @@ public class Browser {
 	
 	
 	public static String captureScreen() throws IOException, InterruptedException{
-		//Thread.sleep(3000);
+		Thread.sleep(1000);
 		File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		String path="C:\\STAF\\Screens\\"+ConfigReader.getInstance().getTestCaseName()+"\\" +ConfigReader.getInstance().getTestCaseName()+"_"+System.currentTimeMillis()+".png";
+		String path=System.getProperty("user.dir")+"\\test-output\\"+ConfigReader.getInstance().getTestCaseName()+"\\" +ConfigReader.getInstance().getTestCaseName()+"_"+System.currentTimeMillis()+".png";
 		FileUtils.copyFile(src, new File(path));
 		return path;
 		
