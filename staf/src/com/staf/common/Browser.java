@@ -41,7 +41,7 @@ public class Browser {
 			System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe" );
 			driver = new InternetExplorerDriver();
 		}
-		//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get(appurl);
 		
 	}
