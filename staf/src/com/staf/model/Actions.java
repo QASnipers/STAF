@@ -43,7 +43,9 @@ public class Actions  {
 				ReportReader.report("fail", obj.getObjectName()+" Object not found");
 				Assert.fail(obj.getObjectName()+" Object not found");
 			}
-			element = elements.get(Integer.parseInt(obj.getIndex()));
+			
+			element = wait.until(ExpectedConditions.visibilityOf(elements.get(Integer.parseInt(obj.getIndex()))));
+			
 		}else if(obj.getIdentifier().equalsIgnoreCase("Bytagname")){
 			if(obj.getType().equalsIgnoreCase("radio") || obj.getType().equalsIgnoreCase("checkbox")){
 					element = Browser.driver.findElement(By.xpath("//input[@type=" + obj.getType() + "']"));
