@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,16 +31,41 @@ public class Browser {
 	static Logger log=Logger.getLogger(Browser.class.getClass());
 
 	public static void launchBrowser(String type, String appurl){
+		String oss = System.getProperty("os.name");
+		String drv;
+		
+		
+		if (oss.equalsIgnoreCase("Mac OS X")){
+			drv = "/drivers/mac/";
+		}else{
+			drv = "\\drivers\\";
+		}
+		
+		
 		if (type.equalsIgnoreCase("FF")){
-			System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir") + "\\drivers\\geckodriver.exe" );
+			if (oss.equalsIgnoreCase("Mac OS X")){
+				System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir") + drv+"geckodriver_mac" );
+			}else{
+				System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir") + drv+"geckodriver.exe" );
+			}
 			driver = new FirefoxDriver();
 			log.info("starting the firefox browser");
 		}else if(type.equalsIgnoreCase("CHROME")){
-				System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") + "\\drivers\\chromedriver.exe" );
-			driver = new ChromeDriver();
+			if (oss.equalsIgnoreCase("Mac OS X")){
+				System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") +drv+ "chromedriver" );
+			}else{
+				System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") +drv+ "chromedriver.exe" );
+			}	
+				driver = new ChromeDriver();
+				log.info("starting the Chrome browser");
 		}else if(type.equalsIgnoreCase("IE")){
-			System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe" );
+			System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") + drv+"IEDriverServer.exe" );
 			driver = new InternetExplorerDriver();
+			log.info("starting the IE browser");
+		}else if(type.equalsIgnoreCase("SAFARI")){
+			
+			driver = new SafariDriver();
+			log.info("starting the Safari browser");
 		}
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get(appurl);

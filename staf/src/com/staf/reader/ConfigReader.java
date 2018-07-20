@@ -78,9 +78,16 @@ public class ConfigReader {
 	//TODO : read from class path
 	public void readConfiguration() throws IOException {
 		Properties properties = new Properties();
-		//InputStream configInputStream =  getClass().getClassLoader().getResourceAsStream("config.properties");		
-		//FileInputStream configInputStream=new FileInputStream(new File("C:\\Users\\muralidharg\\git\\STAF\\staf\\src\\com\\staf\\properties\\config.properties"));
-		FileInputStream configInputStream=new FileInputStream(new File(System.getProperty("user.dir") + "\\src\\com\\staf\\properties\\config.properties"));
+		String oss = System.getProperty("os.name");
+		String conf;
+		
+		if (oss.equalsIgnoreCase("Mac OS X")){
+		   conf = 	"/src/com/staf/properties/config.properties";
+		}else{
+			 conf = 	"\\src\\com\\staf\\properties\\config.properties";
+		}
+		FileInputStream configInputStream=new FileInputStream(new File(System.getProperty("user.dir") + conf));
+		
 		properties.load(configInputStream);
 		configInputStream.close();
 		this.setBrowserType(properties.getProperty("BROWSER_TYPE"));

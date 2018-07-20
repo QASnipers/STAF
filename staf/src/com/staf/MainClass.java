@@ -25,8 +25,8 @@ public class MainClass extends ReportReader  {
 		for(int currentRow=0; currentRow<=ConfigReader.getInstance().getDataRowsCount(); currentRow++){
 			ConfigReader.getInstance().setDataCurrentRow(currentRow);
 			ReportReader.report("info",tstName+" Started");
-			app.PG_01_searchvehicle.enterCarSearchDetails();
-			app.PG_01_searchvehicle.clickSearch();
+			app.PG_01_Searchvehicle.enterCarSearchDetails();
+			app.PG_01_Searchvehicle.clickSearch();
 			
 			//Browser.back();
 			
@@ -34,14 +34,7 @@ public class MainClass extends ReportReader  {
 	}
 	@Test
 	public void test2(){
-		String tstName;
-		tstName = Thread.currentThread().getStackTrace()[1].getMethodName();
-		ConfigReader.getInstance().setTestCaseName(tstName);
-		ReportReader.registerTest(tstName);
-		Browser.launchBrowser(ConfigReader.getInstance().getBrowserType(), ConfigReader.getInstance().getUrl());
-		Browser.maximize();
-		ReportReader.report("info",tstName+" Started");
-		app.PG_01_searchvehicle.clickSearch();
+		
 	}
 	
 

@@ -19,20 +19,24 @@ import org.testng.Reporter;
 
 import com.aventstack.extentreports.Status;
 
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
+
 
 public class ExcelReader {
 	static Map<String, List<String>> columnNames;
 	public static void loadData(String testDataFile, String sheetName){
 		columnNames  = new HashMap<String, List<String>>();
 		DataFormatter dataFormatter = new DataFormatter();
+		String oss = System.getProperty("os.name");
 		
+		
+		if (oss.equalsIgnoreCase("Mac OS X")){
+			testDataFile.replace("//", "/");
+		}
 		int colIterator,colCount, rowCount,ro;
 		try {
 			
 			FileInputStream fileInputStream = new FileInputStream(testDataFile);
+			
 			XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
 			XSSFSheet worksheet = workbook.getSheet(sheetName);
 			XSSFRow row = null;
