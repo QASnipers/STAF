@@ -55,7 +55,7 @@ public class Browser {
 				System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") +drv+ "chromedriver" );
 			}else{
 				System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir") +drv+ "chromedriver.exe" );
-			}	
+			}	 
 				driver = new ChromeDriver();
 				log.info("starting the Chrome browser");
 		}else if(type.equalsIgnoreCase("IE")){
@@ -69,7 +69,6 @@ public class Browser {
 		}
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get(appurl);
-		
 	}
 	//Maximize
 	public static void maximize(){
